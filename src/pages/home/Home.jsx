@@ -3,16 +3,15 @@ import Layout from '../../components/Layout'
 import myContext from '../../context/data/MyContext';
 
 function Home() {
-  const context = useContext(myContext);
-  console.log(context);
-
+  
   return (
     <Layout>
-      Home
+     Home
     </Layout>
   )
 }
 
 export default Home;
+
 
 
