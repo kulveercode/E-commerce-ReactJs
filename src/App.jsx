@@ -8,6 +8,9 @@ import Dashboard from './pages/admin/dashboard/Dashboard';
 import MyState from './context/data/MyState';
 import Login from './pages/registration/Login';
 import Signup from './pages/registration/Signup';
+import ProductInfo from './pages/productInfo/ProductInfo';
+import AddProduct from './pages/admin/page/AddProduct';
+import UpdateProduct from './pages/admin/page/UpdateProduct';
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/productinfo:id' element={<ProductInfo />} />
+        <Route path='/addproduct' element={<AddProduct />} />
+        <Route path='/updateproduct' element={<UpdateProduct />} />
         <Route path='/*' element={<NoPage />} />
       </Routes>
     </Router>
