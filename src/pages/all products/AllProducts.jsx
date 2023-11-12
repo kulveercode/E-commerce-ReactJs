@@ -1,4 +1,6 @@
 import React from 'react'
+import Layout from '../../components/layout/Layout';
+
 
 function AllProducts() {
   return (
@@ -8,4 +10,5 @@ function AllProducts() {
   )
 }
 
-export default AllProducts
+export default AllProducts;
+
