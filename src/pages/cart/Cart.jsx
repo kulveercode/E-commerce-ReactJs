@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import myContext from "../../context/data/MyContext";
 import Layout from "../../components/layout/Layout";
 import Modal from "../../components/modal/Modal";
@@ -15,12 +15,25 @@ function Cart() {
 
   const deleteCart = (item) => {
     dispatch(deleteFromCart(item));
-    toast.success("Delete Cart")
-  }
+    toast.success("Delete Cart");
+  };
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
-  }, [cartItems])
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const [totalAmount, setTotalAmount] = useState(0);
+  useEffect(() => {
+    let temp = 0;
+    cartItems.forEach((cartItem) => {
+      temp = temp + parseInt(cartItem.price);
+    });
+    setTotalAmount(temp);
+    // console.log(temp)
+  }, [cartItems]);
+
+  const shipping = parseInt(100);
+  const grandTotal = shipping + totalAmount;
 
   return (
     <Layout>
@@ -70,7 +83,10 @@ function Cart() {
                         ₹{price}
                       </p>
                     </div>
-                    <div onClick={() => deleteCart(item)} className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                    <div
+                      onClick={() => deleteCart(item)}
+                      className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -110,7 +126,7 @@ function Cart() {
                 className="text-gray-700"
                 style={{ color: mode === "dark" ? "white" : "" }}
               >
-                ₹100
+                {totalAmount}
               </p>
             </div>
             <div className="flex justify-between">
@@ -124,7 +140,7 @@ function Cart() {
                 className="text-gray-700"
                 style={{ color: mode === "dark" ? "white" : "" }}
               >
-                ₹20
+                {shipping}
               </p>
             </div>
             <hr className="my-4" />
@@ -140,7 +156,7 @@ function Cart() {
                   className="mb-1 text-lg font-bold"
                   style={{ color: mode === "dark" ? "white" : "" }}
                 >
-                  ₹200
+                  {grandTotal}
                 </p>
               </div>
             </div>
