@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MyContext from "./MyContext";
+import myContext from "./MyContext";
 import { fireDB } from "../../firebase/firebaseConfig";
 import {
   Timestamp,
@@ -178,7 +178,7 @@ function MyState(props) {
   const [filterPrice, setFilterPrice] = useState("");
 
   return (
-    <MyContext.Provider
+    <myContext.Provider
       value={{
         mode,
         toggleMode,
@@ -202,7 +202,7 @@ function MyState(props) {
       }}
     >
       {props.children}
-    </MyContext.Provider>
+    </myContext.Provider>
   );
 }
 
