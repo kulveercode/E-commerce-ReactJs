@@ -4,6 +4,7 @@ import {
   Timestamp,
   addDoc,
   collection,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -11,7 +12,7 @@ import {
 import { toast } from "react-toastify";
 import myContext from "./MyContext";
 
-function myState(props) {
+function MyState(props) {
   const [mode, setMode] = useState("light");
   const [loading, setLoading] = useState(false);
 
@@ -94,6 +95,26 @@ function myState(props) {
     }
   };
 
+  const [order, setOrder] = useState([]);
+
+  const getOrderData = async () => {
+    setLoading(true)
+    try {
+      const result = await getDocs(collection(fireDB, "orders"))
+      const ordersArray = [];
+      result.forEach((doc) => {
+        ordersArray.push(doc.data());
+        setLoading(false)
+      });
+      setOrder(ordersArray);
+      console.log(ordersArray)
+      setLoading(false);
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
     getProductData();
   }, []);
@@ -111,7 +132,8 @@ function myState(props) {
         product,
         edithandle,
         updateProduct,
-        deleteproduct
+        deleteproduct,
+        order
       }}
     >
       {props.children}
@@ -119,4 +141,4 @@ function myState(props) {
   );
 }
 
-export default myState;
+export default MyState;

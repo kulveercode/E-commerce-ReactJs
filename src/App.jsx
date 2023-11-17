@@ -19,12 +19,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NoPage from "./pages/no page/NoPage";
 import AllProducts from "./pages/all products/AllProducts";
-import myState from "./context/data/MyState";
+import MyState from "./context/data/MyState";
+
 
 function App() {
   return (
 
-    <myState>
+    <MyState>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -69,7 +70,7 @@ function App() {
         </Routes>
         <ToastContainer />
       </Router>
-    </myState>
+    </MyState>
   );
 }
 
