@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { fireDB } from "../../firebase/FirebaseConfig";
+import MyContext from "./MyContext";
+import { fireDb } from "../../firebase/firebaseConfig";
 import {
   Timestamp,
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   onSnapshot,
   orderBy,
   query,
+  setDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
-import myContext from "./MyContext";
 
 function MyState(props) {
   const [mode, setMode] = useState("light");
@@ -51,14 +54,11 @@ function MyState(props) {
     ) {
       return toast.error("Please fill all fields");
     }
-    const productRef = collection(fireDB, "products");
+    const productRef = collection(fireDb, "products");
     setLoading(true);
     try {
       await addDoc(productRef, products);
       toast.success("Product Add successfully");
-      setTimeout(() => {
-        window.location.href = "/dashboard";
-      }, 800);
       getProductData();
       closeModal();
       setLoading(false);
@@ -76,7 +76,7 @@ function MyState(props) {
     setLoading(true);
     try {
       const q = query(
-        collection(fireDB, "products"),
+        collection(fireDb, "products"),
         orderBy("time")
         // limit(5)
       );
@@ -95,32 +95,90 @@ function MyState(props) {
     }
   };
 
+  const edithandle = (item) => {
+    setProducts(item);
+  };
+  // update product
+  const updateProduct = async (item) => {
+    setLoading(true);
+    try {
+      await setDoc(doc(fireDb, "products", products.id), products);
+      toast.success("Product Updated successfully");
+      getProductData();
+      setLoading(false);
+      window.location.href = "/dashboard";
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+    setProducts("");
+  };
+
+  const deleteProduct = async (item) => {
+    try {
+      setLoading(true);
+      await deleteDoc(doc(fireDb, "products", item.id));
+      toast.success("Product Deleted successfully");
+      setLoading(false);
+      getProductData();
+    } catch (error) {
+      // toast.success('Product Deleted Falied')
+      setLoading(false);
+    }
+  };
+
   const [order, setOrder] = useState([]);
 
   const getOrderData = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const result = await getDocs(collection(fireDB, "orders"))
+      const result = await getDocs(collection(fireDb, "orders"));
       const ordersArray = [];
       result.forEach((doc) => {
         ordersArray.push(doc.data());
-        setLoading(false)
+        setLoading(false);
       });
       setOrder(ordersArray);
-      console.log(ordersArray)
+      // console.log(ordersArray)
       setLoading(false);
     } catch (error) {
-      console.log(error)
-      setLoading(false)
+      console.log(error);
+      setLoading(false);
     }
-  }
+  };
+
+  const [user, setUser] = useState([]);
+
+  const getUserData = async () => {
+    setLoading(true);
+    try {
+      const result = await getDocs(collection(fireDb, "user"));
+      const usersArray = [];
+      result.forEach((doc) => {
+        usersArray.push(doc.data());
+        setLoading(false);
+      });
+      setUser(usersArray);
+      console.log(usersArray);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     getProductData();
+    getOrderData();
+    getUserData();
   }, []);
 
+  const [searchkey, setSearchkey] = useState("");
+  const [filterType, setFilterType] = useState("");
+  const [filterPrice, setFilterPrice] = useState("");
+
   return (
-    <myContext.Provider
+    <MyContext.Provider
       value={{
         mode,
         toggleMode,
@@ -130,14 +188,21 @@ function MyState(props) {
         setProducts,
         addProduct,
         product,
-        edithandle,
         updateProduct,
-        deleteproduct,
-        order
+        edithandle,
+        deleteProduct,
+        order,
+        user,
+        searchkey,
+        setSearchkey,
+        filterType,
+        setFilterType,
+        filterPrice,
+        setFilterPrice,
       }}
     >
       {props.children}
-    </myContext.Provider>
+    </MyContext.Provider>
   );
 }
 
