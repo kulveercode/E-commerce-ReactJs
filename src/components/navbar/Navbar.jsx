@@ -90,7 +90,7 @@ function Navbar() {
                     ""
                   )}
 
-                  {user?.user?.email === "knupadhyay784@gmail.com" ? (
+                  {user?.user?.email === "kulveer.singh@gmail.com" ? (
                     <div className="flow-root">
                       <Link
                         to={"/dashboard"}
@@ -163,7 +163,7 @@ function Navbar() {
 
       <header className="relative bg-white">
         <p
-          className="flex h-10 items-center justify-center bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
+          className="flex h-10 items-center justify-center bg-blue-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
           style={{
             backgroundColor: mode === "dark" ? "rgb(62 64 66)" : "",
             color: mode === "dark" ? "white" : "",
@@ -216,7 +216,7 @@ function Navbar() {
                       className=" text-2xl font-bold text-black  px-2 py-1 rounded"
                       style={{ color: mode === "dark" ? "white" : "" }}
                     >
-                      E-Bharat
+                      E-Commerce
                     </h1>
                   </div>
                 </Link>
@@ -249,7 +249,7 @@ function Navbar() {
                     </Link>
                   )}
 
-                  {user?.user?.email === "knupadhyay784@gmail.com" ? (
+                  {user?.user?.email === "kulveer.singh@gmail.com" ? (
                     <Link
                       to={"/dashboard"}
                       className="text-sm font-medium text-gray-700 "

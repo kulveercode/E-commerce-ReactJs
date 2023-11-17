@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MyContext from "./MyContext";
-import { fireDb } from "../../firebase/firebaseConfig";
+import { fireDB } from "../../firebase/firebaseConfig";
 import {
   Timestamp,
   addDoc,
@@ -102,7 +102,7 @@ function MyState(props) {
   const updateProduct = async (item) => {
     setLoading(true);
     try {
-      await setDoc(doc(fireDb, "products", products.id), products);
+      await setDoc(doc(fireDB, "products", products.id), products);
       toast.success("Product Updated successfully");
       getProductData();
       setLoading(false);
@@ -117,7 +117,7 @@ function MyState(props) {
   const deleteProduct = async (item) => {
     try {
       setLoading(true);
-      await deleteDoc(doc(fireDb, "products", item.id));
+      await deleteDoc(doc(fireDB, "products", item.id));
       toast.success("Product Deleted successfully");
       setLoading(false);
       getProductData();
@@ -152,7 +152,7 @@ function MyState(props) {
   const getUserData = async () => {
     setLoading(true);
     try {
-      const result = await getDocs(collection(fireDb, "user"));
+      const result = await getDocs(collection(fireDB, "user"));
       const usersArray = [];
       result.forEach((doc) => {
         usersArray.push(doc.data());
