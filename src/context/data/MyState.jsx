@@ -54,11 +54,14 @@ function MyState(props) {
     ) {
       return toast.error("Please fill all fields");
     }
-    const productRef = collection(fireDb, "products");
+    const productRef = collection(fireDB, "products");
     setLoading(true);
     try {
       await addDoc(productRef, products);
       toast.success("Product Add successfully");
+      setTimeout(() => {
+        window.location.href = '/dashboard'
+      }, 800);
       getProductData();
       closeModal();
       setLoading(false);
@@ -76,7 +79,7 @@ function MyState(props) {
     setLoading(true);
     try {
       const q = query(
-        collection(fireDb, "products"),
+        collection(fireDB, "products"),
         orderBy("time")
         // limit(5)
       );
@@ -132,7 +135,7 @@ function MyState(props) {
   const getOrderData = async () => {
     setLoading(true);
     try {
-      const result = await getDocs(collection(fireDb, "orders"));
+      const result = await getDocs(collection(fireDB, "order"));
       const ordersArray = [];
       result.forEach((doc) => {
         ordersArray.push(doc.data());

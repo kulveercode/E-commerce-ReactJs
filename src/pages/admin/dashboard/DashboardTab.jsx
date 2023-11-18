@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import MyContext from "../../../context/data/MyContext";
+import myContext from "../../../context/data/MyContext";
 import Layout from "../../../components/layout/Layout";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { FaUser, FaCartPlus } from "react-icons/fa";
@@ -8,7 +8,7 @@ import { AiFillShopping, AiFillPlusCircle, AiFillDelete } from "react-icons/ai";
 import { Link, Navigate } from "react-router-dom";
 
 function DashboardTab() {
-  const context = useContext(MyContext);
+  const context = useContext(myContext);
   const { mode, product, edithandle, deleteProduct, order, user } = context;
   let [isOpen, setIsOpen] = useState(false);
   console.log(order);
@@ -75,6 +75,7 @@ function DashboardTab() {
                 <div className=" flex justify-end">
                   <div onClick={goToAdd}>
                     <button
+                      onClick={goToAdd}
                       type="button"
                       className="focus:outline-none text-white bg-pink-600 shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] border hover:bg-pink-700 outline-0 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
                       style={{
